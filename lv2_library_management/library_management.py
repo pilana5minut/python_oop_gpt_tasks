@@ -11,7 +11,7 @@ class Book:
             str: Строка описывающая статус книги в удобочитаемом формате.
         """
         if (self.status):
-            return 'В библиотеке'
+            return 'В наличии'
         else:
             return 'У читателя'
 
@@ -60,7 +60,7 @@ class Library:
         """
         if (isinstance(book_obj, Book) and not self.is_stock(book_obj)):
             self.lib.append(book_obj)
-            print('Книга добелена')
+            print('Книга была успешно зарегистрирована в библиотеке.')
             self.print_list_book([book_obj])
 
     def out_book(self, title_book: str) -> None:
@@ -71,12 +71,14 @@ class Library:
         for b in self.lib:
             if (b.title == title_book and b.status == True):
                 b.status = False
-                print('Книга выдана читателю.')
+                print('Книга была выдана читателю.')
                 self.print_list_book([b])
                 return
-            else:
-                continue
-        print('Книга в данный момент у читателя на руках.')
+            elif (b.title == title_book and b.status == False):
+                print('Книга в данный момент у читателя.')
+                self.print_list_book([b])
+                return
+        print('Книга с таким название не зарегистрирована в библиотеке.')
 
     def return_book(self, title_book: str) -> None:
         """Возвращает книгу в библиотеку.
@@ -86,8 +88,9 @@ class Library:
         for b in self.lib:
             if (b.title == title_book):
                 b.status = True
-                print('Книга возвращена в библиотеку.')
+                print('Книга была возвращена в библиотеку.')
                 self.print_list_book([b])
+        print('Книга с таким название не зарегистрирована в библиотеке.')
 
     def search_book(self, prompt: str) -> None:
         """Ищет книгу среди всех зарегистрированных по названию или автору.\n
@@ -115,9 +118,9 @@ class Library:
                 in_stock += 1
             else:
                 out_stock += 1
-        print(f'Книг всего: {all_stock}')
-        print(f'Из них: {in_stock} - в наличии')
-        print(f'Из них: {out_stock} - выдано читателю')
+        print(f'Книг всего зарегистрировано: {all_stock}')
+        print(f'Книг в наличии: {in_stock}')
+        print(f'Книг выдано читателю: {out_stock}')
 
     def show_nomenclature(self, status: bool = None) -> None:
         """Распечатывает тот или иной список книг в зависимости от аргумента.\n
@@ -144,7 +147,7 @@ class Library:
             print(f'Книги выданные читателю: {len(out_stock)}')
             self.print_list_book(out_stock)
         elif (status == None):
-            print(f'Всего книг зарегистрировано: {len(all_stock)}')
+            print(f'Книг всего зарегистрировано: {len(all_stock)}')
             self.print_list_book(all_stock)
 
 
