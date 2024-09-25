@@ -20,7 +20,8 @@ class Book:
         print(f'''
             Название: {self.title}
             Автор: {self.author}
-            Статус: {self.get_status()}''')
+            Статус: {self.get_status()}
+            ''')
 
 
 #######################################################################
@@ -69,16 +70,17 @@ class Library:
             title_book (str): Строка с название книги.
         """
         for b in self.lib:
-            if (b.title == title_book and b.status == True):
+            if (b.title == title_book and b.status):
                 b.status = False
                 print('Книга была выдана читателю.')
                 self.print_list_book([b])
                 return
-            elif (b.title == title_book and b.status == False):
+            elif (b.title == title_book and not b.status):
                 print('Книга в данный момент у читателя.')
                 self.print_list_book([b])
                 return
-        print('Книга с таким название не зарегистрирована в библиотеке.')
+        print(f'Книга с названием "{
+            title_book}" не зарегистрирована в библиотеке.')
 
     def return_book(self, title_book: str) -> None:
         """Возвращает книгу в библиотеку.
@@ -90,7 +92,9 @@ class Library:
                 b.status = True
                 print('Книга была возвращена в библиотеку.')
                 self.print_list_book([b])
-        print('Книга с таким название не зарегистрирована в библиотеке.')
+                return
+        print(f'Книга с названием "{
+            title_book}" не зарегистрирована в библиотеке.')
 
     def search_book(self, prompt: str) -> None:
         """Ищет книгу среди всех зарегистрированных по названию или автору.\n
@@ -110,7 +114,6 @@ class Library:
 
     def show_status_library(self) -> None:
         """Отображает текущее состояние всех книг в библиотеке."""
-        all_stock = len(self.lib)
         in_stock = 0
         out_stock = 0
         for b in self.lib:
@@ -118,7 +121,7 @@ class Library:
                 in_stock += 1
             else:
                 out_stock += 1
-        print(f'Книг всего зарегистрировано: {all_stock}')
+        print(f'Книг всего зарегистрировано: {len(self.lib)}')
         print(f'Книг в наличии: {in_stock}')
         print(f'Книг выдано читателю: {out_stock}')
 
@@ -130,29 +133,26 @@ class Library:
         Args:
             status (bool, optional): Флаг обозначающий тот или иной список.
         """
-        status
-        all_stock = []
+        print(f"==>> status: {status}")
         in_stock = []
         out_stock = []
         for b in self.lib:
-            all_stock.append(b)
-            if (b.status == True):
+            if (b.status):
                 in_stock.append(b)
             else:
                 out_stock.append(b)
-        if (status == True):
+        if (status):
             print(f'Книги в наличии: {len(in_stock)}')
             self.print_list_book(in_stock)
-        elif (status == False):
+        elif (status is False):
             print(f'Книги выданные читателю: {len(out_stock)}')
             self.print_list_book(out_stock)
-        elif (status == None):
-            print(f'Книг всего зарегистрировано: {len(all_stock)}')
-            self.print_list_book(all_stock)
+        else:
+            print(f'Книг всего зарегистрировано: {len(self.lib)}')
+            self.print_list_book(self.lib)
 
 
 #######################################################################
-
 b1 = Book("FastAPI", "Билл Любанович")
 b2 = Book("Простой Python", "Билл Любанович")
 b3 = Book("Чистый код", "Роберт Мартин")
