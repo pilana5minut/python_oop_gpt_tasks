@@ -1,7 +1,12 @@
 {
   "cSpell.words": [
+    "Бьюли",
     "Кетов",
     "Любанович",
     "Шрёдер"
-  ]
+  ],
+  "editor.tokenColorCustomizations": {
+    "comments": "",
+    "textMateRules": []
+  }
 }
